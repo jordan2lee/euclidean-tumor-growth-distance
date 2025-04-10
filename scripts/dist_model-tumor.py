@@ -1,4 +1,6 @@
-# Calculate Distance Between Tumor and Derived Model
+#!/usr/bin/env python
+
+# Calculate Distance Between Tumor and Derived Model (Paired Tumor and Model)
 # using Custom OHSU Euclidean Distance Method
 
 import pandas as pd
@@ -7,10 +9,15 @@ import statistics
 import scipy.stats as stats
 import json
 from collections import Counter
+import argparse
 
-#######
-cancer = 'PAAD'
-run = 'HCMITumorModel'
+def get_arguments():
+    parser = argparse.ArgumentParser(description='')
+    parser.add_argument("-c", "--cancer", help ="TCGA cancer cohort abbrev", required=True, type=str)
+    return parser.parse_args()
+args = get_arguments()
+
+####### Hardcoded
 matches_file = 'src/distance_metric/HCMI_AWG_Model-Tumor-Normal_Linkage_v2.0_2.20.2024.txt'
 ensure_matches_file = 'data/distance_metric/src/missing_ohsu_euclidean_distance_all.02.12.2024.csv'
 #######
@@ -96,18 +103,18 @@ with open('data/distance_metric/src/cancer2fts.json', 'r') as fh:
         cancer2fts = json.loads(line)
 
 # read in hcmi data
-model_df = df_read(cancer, 'Model')
-tumor_df = df_read(cancer, 'Tumor')
+model_df = df_read(args.cancer, 'Model')
+tumor_df = df_read(args.cancer, 'Tumor')
 
 # ft reduction (using TMP genes) and filter for shared genes (ex. tumor, model, TMP impt genes) 
 genes_keep = intersection( list(tumor_df.columns), list(model_df.columns) )
-combined_top_fts = cancer2fts[cancer] # TMP important fts
+combined_top_fts = cancer2fts[args.cancer] # TMP important fts
 genes_keep = intersection( genes_keep, combined_top_fts)
 model_df = model_df[genes_keep]
 tumor_df = tumor_df[genes_keep]
 # now save these files
-model_df.to_csv('data/distance_metric/{}_GEXP/{}_topgenes_Model.tsv'.format(cancer, cancer), sep='\t', index=True)
-tumor_df.to_csv('data/distance_metric/{}_GEXP/{}_topgenes_Tumor.tsv'.format(cancer,cancer), sep='\t', index=True)
+model_df.to_csv('data/distance_metric/{}_GEXP/{}_topgenes_Model.tsv'.format(args.cancer, args.cancer), sep='\t', index=True)
+tumor_df.to_csv('data/distance_metric/{}_GEXP/{}_topgenes_Tumor.tsv'.format(args.cancer,args.cancer), sep='\t', index=True)
 
 # -----
 # Calculate distance
@@ -179,7 +186,7 @@ with open('src/full_cancers.json', 'r') as fh:
     for line in fh:
         longform = json.loads(line)
         
-mdf= mdf[mdf['cancer_type'].isin(longform[cancer])]
+mdf= mdf[mdf['cancer_type'].isin(longform[args.cancer])]
 mdf = mdf[['matched_tumor_aliquot', 'aliquot_id3', ]].reset_index(drop=True)
 mdf.columns = ['Matched Tumor Aliquot','Cancer Model Aliquot']
 
@@ -225,7 +232,7 @@ with open('src/extra_tumor_model_pairs.json', 'r') as fh:
         manual_matches = json.loads(line)
 
 # Add this if not already there or if already there then update the pairings
-for ipair in manual_matches[cancer]:
+for ipair in manual_matches[args.cancer]:
     sample_tumor = ipair['tumor']
     sample_model = ipair['model']
     if sample_tumor not in list(tumor2model['Matched Tumor Aliquot']):
@@ -302,9 +309,9 @@ for i in range(0, len(z_tumors_list)):
             similar.append('dissimilarTumor:dissimilarModel')
             
 final_results['similar']= similar
-final_results.to_csv('data/distance_metric/main_results/euc_ratio_HCMITumor.Model_{}.tsv'.format(cancer), sep='\t', index=False)
+final_results.to_csv('data/distance_metric/main_results/euc_ratio_HCMITumor.Model_{}.tsv'.format(args.cancer), sep='\t', index=False)
 
 # Create outlier file
 problem_labels = ['similarTumor:dissimilarModel','dissimilarTumor:similarModel', 'dissimilarTumor:dissimilarModel']
 issues =final_results[final_results['similar'].isin(problem_labels)].reset_index(drop=True)
-issues.to_csv('data/distance_metric/main_results/outlier_samples_HCMITumor.Model_{}.tsv'.format(cancer), sep='\t',index=False)
+issues.to_csv('data/distance_metric/main_results/outlier_samples_HCMITumor.Model_{}.tsv'.format(args.cancer), sep='\t',index=False)
