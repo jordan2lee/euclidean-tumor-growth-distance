@@ -70,6 +70,13 @@ tar -xzf (files-downloaded)
 bash scripts/process.sh PAAD data/midway.freeze.v2
 ```
 
+> Creates file data/midway.freeze.v2/<CANCER>_GEXP/<CANCER>_GEXP_prep2_<TYPE>.tsv
+
+
+
+
+
+
 
 
 
