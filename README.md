@@ -18,6 +18,6 @@ mkdir -p data/distance_metric/${cancer}_GEXP
 ```
 
 Run
-```
-scripts/dist_model-tumor.ipynb
+```bash
+python3 scripts/dist_model-tumor.py
 ```
