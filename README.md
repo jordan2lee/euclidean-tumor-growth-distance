@@ -21,20 +21,3 @@ Run
 ```
 scripts/dist_model-tumor.ipynb
 ```
-> creates file data/distance_metric/main_results/important/mdelta.tsv that contains all mdelta values (match and mismatchs, within same cohort and across cohorts)
-> Requres input files, including info on which samples are correct matches `src/model_tumor_pairings_Pulled_analysis_tracker_OHSU_tab_on_05.03.24.txt`
-
-
-If want to get pvalues, continue with (WIP)
-```
-scripts/fdr_correction_only.Rmd
-
-```
-then can generate plots of the distances here
-```
-scripts/visualize_distances.ipynb
-violin plots visualize_califano.ipynb
-```
-
-### Notes
-The source file `data/distance_metric/src/model-tumor-relations.json` was created by running this code `python scripts/create_model-tumor-relations.py` and is used as a look up dictionary for samples when taking other methods distance file (all vs all samples) and converting to p-values.
