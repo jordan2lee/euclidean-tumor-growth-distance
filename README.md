@@ -71,7 +71,7 @@ tar -xzf (files-downloaded)
 
 
 ## Run Processing Pipeline
- TODO update this output dir name to reflect that this is for GEXP data
+TODO update this output dir name to reflect that this is for GEXP data
 
 Example shown for running PAAD cohort
 ```bash
