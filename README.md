@@ -4,6 +4,12 @@
 
 ## Table of contents
 - [Quickstart Guide](#quickstart-guide)
+- [Download Source Files](#download-source-files)
+- [Download Data from Manifest File Using the GDC Client](#download-data-from-manifest-file-using-the-gdc-client)
+- [Run Processing Pipeline](#run-processing-pipeline)
+- [Calculate Euclidean Distances](#calculate-euclidean-distances)
+
+
 
 ## Quickstart Guide
 
@@ -64,7 +70,7 @@ tar -xzf (files-downloaded)
 > + 'UCEC':['Endometrial Cancer'],
 
 
-## Run processing pipeline
+## Run Processing Pipeline
  TODO update this output dir name to reflect that this is for GEXP data
 
 Example shown for running PAAD cohort
@@ -74,7 +80,7 @@ bash scripts/process.sh PAAD data/midway.freeze.v2
 
 > Creates file data/midway.freeze.v2/<CANCER>_GEXP/<CANCER>_GEXP_prep2_<TYPE>.tsv
 
-## Calculate Distances
+## Calculate Euclidean Distances
 Prep
 ```
 mkdir -p data/distance_metric/${cancer}_GEXP
