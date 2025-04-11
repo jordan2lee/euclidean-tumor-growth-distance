@@ -42,3 +42,8 @@ Make sure to complete each step on the [submodule requirements page](https://git
 
 ## 4. Download Required Data
 TODO update this section
+
+Place files in
+```
+data/distance_metric/src/missing_ohsu_euclidean_distance_all.02.12.2024.csv # used in dist_model-tumor.py
+```

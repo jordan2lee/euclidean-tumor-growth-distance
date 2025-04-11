@@ -66,44 +66,21 @@ tar -xzf (files-downloaded)
 
 ## Run processing pipeline
  TODO update this output dir name to reflect that this is for GEXP data
+
+Example shown for running PAAD cohort
 ```bash
 bash scripts/process.sh PAAD data/midway.freeze.v2
 ```
 
 > Creates file data/midway.freeze.v2/<CANCER>_GEXP/<CANCER>_GEXP_prep2_<TYPE>.tsv
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# TO CLEANUP
-# files not included in repo but are required are:
-data/distance_metric/src/missing_ohsu_euclidean_distance_all.02.12.2024.csv
-
-# Calculate distances and visualize
-Set up
+## Calculate Distances
+Prep
 ```
 mkdir -p data/distance_metric/${cancer}_GEXP
 ```
 
-Run
+Example shown for running PAAD cohort
 ```bash
 python3 scripts/dist_model-tumor.py --cancer PAAD
 ```
