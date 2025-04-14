@@ -78,7 +78,7 @@ Example shown for running PAAD cohort
 bash scripts/process.sh PAAD data/midway.freeze.v2
 ```
 
-> Creates file data/midway.freeze.v2/<CANCER>_GEXP/<CANCER>_GEXP_prep2_<TYPE>.tsv
+> Creates file `data/midway.freeze.v2/<CANCER>_GEXP/<CANCER>_GEXP_prep2_<TYPE>.tsv`
 
 ## Calculate Euclidean Distances
 Prep
