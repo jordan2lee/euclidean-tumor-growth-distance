@@ -66,8 +66,6 @@ This will create subfolders in `data-raw/<CANCER>_GEXP_<TYPE>` and place GDC mol
 
 
 ## Run Processing Pipeline
-TODO update this output dir name to reflect that this is for GEXP data
-
 Example shown for running PAAD cohort
 ```bash
 bash scripts/process.sh PAAD data/prep
@@ -76,12 +74,13 @@ bash scripts/process.sh PAAD data/prep
 > Creates file `data/prep/<CANCER>_GEXP/<CANCER>_GEXP_prep2_<TYPE>.tsv` that is prepped for distance calculations
 
 ## Calculate Euclidean Distances
-Prep
-```
-mkdir -p data/distance_metric/${cancer}_GEXP
-```
 
 Example shown for running PAAD cohort
 ```bash
-python3 scripts/dist_model-tumor.py --cancer PAAD
+bash scripts/euc_distance.sh PAAD data/prep
 ```
+
+Final results are found in: 
+
++ data/distance_metric/main_results/euclidean_distances_HCMITumor.Model_PAAD.tsv
++ data/distance_metric/main_results/euclidean_distances_outlier_samples_HCMITumor.Model_PAAD.tsv

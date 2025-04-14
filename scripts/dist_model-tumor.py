@@ -14,15 +14,20 @@ import argparse
 def get_arguments():
     parser = argparse.ArgumentParser(description='')
     parser.add_argument("-c", "--cancer", help ="TCGA cancer cohort abbrev", required=True, type=str)
+    parser.add_argument("-p", "--prep_path", help ="path to output folder", required=True, type=str)
     return parser.parse_args()
 args = get_arguments()
 
+
+
+
+
 ####### Hardcoded
 matches_file = 'src/distance_metric/HCMI_AWG_Model-Tumor-Normal_Linkage_v2.0_2.20.2024.txt'
-ensure_matches_file = 'data/distance_metric/src/missing_ohsu_euclidean_distance_all.02.12.2024.csv'
+ensure_matches_file = 'src/key_samples.csv'
 #######
 
-def df_read(CANCER, SAMPLE_TYPE):
+def df_read(CANCER, SAMPLE_TYPE, PREP_PATH):
     '''
     read in appropriate file and filter for TMP 
     important genes. provide HCMI abbrev for cancer cohort
@@ -32,15 +37,15 @@ def df_read(CANCER, SAMPLE_TYPE):
     # if needed, merge the two matrices 
     if CANCER == 'LUNG' or CANCER == 'ESO':
         if CANCER == 'LUNG':
-            file = 'data/midway.freeze.v2/{}_GEXP/{}_GEXP_prep2_{}.tsv'.format(CANCER, 'LUAD', SAMPLE_TYPE)
+            file = '{}/{}_GEXP/{}_GEXP_prep2_{}.tsv'.format(PREP_PATH, CANCER, 'LUAD', SAMPLE_TYPE)
             df = pd.read_csv(file, sep='\t', index_col=0).sort_index(axis=0)
-            file = 'data/midway.freeze.v2/{}_GEXP/{}_GEXP_prep2_{}.tsv'.format(CANCER, 'LUSC', SAMPLE_TYPE)
+            file = '{}/{}_GEXP/{}_GEXP_prep2_{}.tsv'.format(PREP_PATH, CANCER, 'LUSC', SAMPLE_TYPE)
             df2 = pd.read_csv(file, sep='\t', index_col=0).sort_index(axis=0)
             assert list(df.index)==list(df2.index) # req for df concat using
         elif CANCER == 'ESO':
-            file = 'data/midway.freeze.v2/{}_GEXP/{}_GEXP_prep2_{}.tsv'.format(CANCER, 'ESCC', SAMPLE_TYPE)
+            file = '{}/{}_GEXP/{}_GEXP_prep2_{}.tsv'.format(PREP_PATH, CANCER, 'ESCC', SAMPLE_TYPE)
             df = pd.read_csv(file, sep='\t', index_col=0).sort_index(axis=0)
-            file = 'data/midway.freeze.v2/{}_GEXP/{}_GEXP_prep2_{}.tsv'.format(CANCER, 'GEA', SAMPLE_TYPE)
+            file = '{}/{}_GEXP/{}_GEXP_prep2_{}.tsv'.format(PREP_PATH, CANCER, 'GEA', SAMPLE_TYPE)
             df2 = pd.read_csv(file, sep='\t', index_col=0).sort_index(axis=0)
             assert list(df.index)==list(df2.index) # req for df concat using        
 
@@ -52,7 +57,7 @@ def df_read(CANCER, SAMPLE_TYPE):
             s1 = df2[new]
             df =pd.concat([df, s1], join="outer", axis = 1)
     else:
-        file = 'data/midway.freeze.v2/{}_GEXP/{}_GEXP_prep2_{}.tsv'.format(CANCER, CANCER, SAMPLE_TYPE)
+        file = '{}/{}_GEXP/{}_GEXP_prep2_{}.tsv'.format(PREP_PATH, CANCER, CANCER, SAMPLE_TYPE)
         df = pd.read_csv(file, sep='\t', index_col=0)
         if CANCER == 'LGGGBM':
             if 'HCM-BROD-1124-C16-06A' in list(df.index):
@@ -98,13 +103,13 @@ def get_euclidean(metric, v1, v2):
 # -----
 
 # Get important feature lists (important genes = TMP ft selected sets)
-with open('data/distance_metric/src/cancer2fts.json', 'r') as fh:
+with open('src/cancer2fts.json', 'r') as fh:
     for line in fh:
         cancer2fts = json.loads(line)
 
 # read in hcmi data
-model_df = df_read(args.cancer, 'Model')
-tumor_df = df_read(args.cancer, 'Tumor')
+model_df = df_read(args.cancer, 'Model', args.prep_path)
+tumor_df = df_read(args.cancer, 'Tumor', args.prep_path)
 
 # ft reduction (using TMP genes) and filter for shared genes (ex. tumor, model, TMP impt genes) 
 genes_keep = intersection( list(tumor_df.columns), list(model_df.columns) )
@@ -309,9 +314,9 @@ for i in range(0, len(z_tumors_list)):
             similar.append('dissimilarTumor:dissimilarModel')
             
 final_results['similar']= similar
-final_results.to_csv('data/distance_metric/main_results/euc_ratio_HCMITumor.Model_{}.tsv'.format(args.cancer), sep='\t', index=False)
+final_results.to_csv('data/distance_metric/main_results/euclidean_distances_HCMITumor.Model_{}.tsv'.format(args.cancer), sep='\t', index=False)
 
 # Create outlier file
 problem_labels = ['similarTumor:dissimilarModel','dissimilarTumor:similarModel', 'dissimilarTumor:dissimilarModel']
 issues =final_results[final_results['similar'].isin(problem_labels)].reset_index(drop=True)
-issues.to_csv('data/distance_metric/main_results/outlier_samples_HCMITumor.Model_{}.tsv'.format(args.cancer), sep='\t',index=False)
+issues.to_csv('data/distance_metric/main_results/euclidean_distances_outlier_samples_HCMITumor.Model_{}.tsv'.format(args.cancer), sep='\t',index=False)
