@@ -70,10 +70,10 @@ TODO update this output dir name to reflect that this is for GEXP data
 
 Example shown for running PAAD cohort
 ```bash
-bash scripts/process.sh PAAD data/midway.freeze.v2
+bash scripts/process.sh PAAD data/prep
 ```
 
-> Creates file `data/midway.freeze.v2/<CANCER>_GEXP/<CANCER>_GEXP_prep2_<TYPE>.tsv`
+> Creates file `data/prep/<CANCER>_GEXP/<CANCER>_GEXP_prep2_<TYPE>.tsv` that is prepped for distance calculations
 
 ## Calculate Euclidean Distances
 Prep
