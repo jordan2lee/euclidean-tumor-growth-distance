@@ -29,13 +29,13 @@ This will show how to get the files to download files from the GDC data portal b
 
 ### Download Manifest Files
 
-Download manifest files for all samples and place in `src/distance_metrics/`. TODO add location to download these files.
+Download manifest files for all samples and place in `src/gdc_download_ref/`. TODO add location to download these files.
 
 > Manifest names follow the pattern: `gdc_manifest.<CANCER>_<DATAPLATFORM>_<TYPE>.txt`
 
 ### Download Sample Sheets
 
-Download manifest files for all samples and place in `src/distance_metrics/`. TODO add location to download these files.
+Download manifest files for all samples and place in `src/gdc_download_ref/`. TODO add location to download these files.
 
 > Sample sheet names follow the pattern: `gdc_sample_sheet.<CANCER>_<DATAPLATFORM>_<TYPE>.tsv`
 
@@ -45,12 +45,7 @@ Download Gene Expression Data
 bash scripts/gdc_download.sh
 ```
 
-This will create subfolders in `data/distance_metric/src/<CANCER>_GEXP_<TYPE>` and place molecular matrices there.
-
-Decompress molecular matrices
-```bash
-tar -xzf (files-downloaded)
-```
+This will create subfolders in `data-raw/<CANCER>_GEXP_<TYPE>` and place GDC molecular matrices here.
 
 > *Note on the selection of Cancer Type: These HCMI selections of Cancer Type were made and grouped together for each corresponding TCGA cancer cohort:*
 >
