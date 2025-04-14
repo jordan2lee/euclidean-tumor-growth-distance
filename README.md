@@ -80,7 +80,7 @@ Example shown for running PAAD cohort
 bash scripts/euc_distance.sh PAAD data/prep
 ```
 
-Final results are found in: 
+Final results are found in `data/distance_metric/main_results/`: 
 
-+ data/distance_metric/main_results/euclidean_distances_HCMITumor.Model_PAAD.tsv
-+ data/distance_metric/main_results/euclidean_distances_outlier_samples_HCMITumor.Model_PAAD.tsv
++ Euclidean distances and z-scores: `euclidean_distances_HCMITumor.Model_PAAD.tsv`
++ Outlier information: `euclidean_distances_outlier_samples_HCMITumor.Model_PAAD.tsv`
