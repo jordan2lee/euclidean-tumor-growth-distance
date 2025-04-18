@@ -44,11 +44,8 @@ Make sure to complete each step on the [submodule requirements page](https://git
 
 ## 4. Download Required Data
 
-Download these files and place in:
+Download these files from the publication page and place in:
 
++ `src/gdc_download_ref.tar.gz` then `cd src; tar -xf gdc_download_ref.tar.gz`
 + `src/key_samples.csv`
-+ `src/gdc_download_ref/gdc_manifest.<CANCER>_GEXP_Model.txt`
-+ `src/gdc_download_ref/gdc_manifest.<CANCER>_GEXP_Tumor.txt`
-+ `src/gdc_download_ref/gdc_sample_sheet.<CANCER>_GEXP_Model.tsv`
-+ `src/gdc_download_ref/gdc_sample_sheet.<CANCER>_GEXP_Tumor.tsv`
 + `src/distance_metric/HCMI_AWG_Model-Tumor-Normal_Linkage_v2.0_2.20.2024.txt`
