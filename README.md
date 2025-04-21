@@ -22,9 +22,12 @@ Install requirements - detailed instructions are found on the [Requirements page
 Ensure that steps are completed on the [Requirements page](doc/requirements.md) - *(includes creating working environment, fetching classifier submodule, and manually downloading required data)*
 
 ## Download Data from Manifest File Using the GDC Client
-Download Gene Expression Data
+Download gene expression data. 
+
+Specify a single cancer cohort (see bullets below on options, example `PAAD` for pancreatic cancer cohort) or use `ALL` to run all cancer cohorts.
+
 ```bash
-bash scripts/gdc_download.sh
+bash scripts/gdc_download.sh PAAD
 ```
 
 This will create subfolders in `data-raw/<CANCER>_GEXP_<TYPE>` and place GDC molecular matrices here.
@@ -47,17 +50,20 @@ This will create subfolders in `data-raw/<CANCER>_GEXP_<TYPE>` and place GDC mol
 > + 'UCEC':['Endometrial Cancer'],
 
 
-## Run Processing Pipeline
-Example shown for running PAAD cohort
+## Pre-process Data
+Run pre-processing pipeline.
+
+Specify a single cancer cohort (see bullets below on options, example `PAAD` for pancreatic cancer cohort) or use `ALL` to run all cancer cohorts.
 ```bash
 bash scripts/process.sh PAAD data/prep
 ```
 
 > Creates file `data/prep/<CANCER>_GEXP/<CANCER>_GEXP_prep2_<TYPE>.tsv` that is prepped for distance calculations
 
-## Calculate Euclidean Distances
+## Determine Biological Distances Between Tumor and Derived Model Pairs
+Calculate euclidean distances.
 
-Example shown for running PAAD cohort
+Specify a single cancer cohort (see bullets below on options, example `PAAD` for pancreatic cancer cohort) or use `ALL` to run all cancer cohorts.
 ```bash
 bash scripts/euc_distance.sh PAAD data/prep
 ```
