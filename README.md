@@ -47,6 +47,11 @@ bash scripts/process.sh PAAD data/prep
 
 > Creates file `data/prep/<CANCER>_GEXP/<CANCER>_GEXP_prep2_<TYPE>.tsv` that is prepped for distance calculations
 
+> Options for cancer cohort includes `ALL`, `BLCA`, `BRCA`, `COADREAD`, `ESO`, `HNSC`, `KID`, `LGGGBM`, `LIHCCHOL`, `LUNG`, `OV`, `PAAD`, `SARC`, `SKCM`, `UCEC`
+
+For more details on each cancer cohort option see [Cohort Options Page](doc/cohort_options.md)
+
+
 ## Determine Biological Distances Between Tumor and Derived Model Pairs
 Calculate euclidean distances.
 
@@ -54,6 +59,11 @@ Specify a single cancer cohort (see bullets below on options, example `PAAD` for
 ```bash
 bash scripts/euc_distance.sh PAAD data/prep
 ```
+
+> Options for cancer cohort includes `ALL`, `BLCA`, `BRCA`, `COADREAD`, `ESO`, `HNSC`, `KID`, `LGGGBM`, `LIHCCHOL`, `LUNG`, `OV`, `PAAD`, `SARC`, `SKCM`, `UCEC`
+
+For more details on each cancer cohort option see [Cohort Options Page](doc/cohort_options.md)
+
 
 Final results are found in `data/distance_metric/main_results/`: 
 
